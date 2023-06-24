@@ -165,13 +165,11 @@ EOF
 sudo systemctl enable surfshark.service
 sudo systemctl start surfshark.service
 
-## Fix Bluetooth
-sudo apt-get install pulseaudio-module-bluetooth
-sudo killall pulseaudio
-pulseaudio --start    
-sudo systemctl restart bluetooth
+## Fix Bluetooth (requires reboot)
+sudo touch /usr/share/pipewire/media-session.d/with-pulseaudio
+sudo apt install gstreamer1.0-pipewire -y
 
-## Enable and start libvirtd for virt-manager (requires a restart)
+## Enable and start libvirtd for virt-manager (requires reboot)
 sudo systemctl enable libvirtd
 sudo systemctl start libvirtd
 
