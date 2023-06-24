@@ -6,6 +6,9 @@ for file in *; do
   ln -s "$(pwd)/$file" ~/.config/"$file"
 done
 
+## Install noto-fonts
+sudo apt install fonts-noto
+
 ## Install Fira Code Mono Nerd Font
 mkdir FiraCode
 wget $(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep "browser_download_url.*FiraMono.*\.tar\.xz" | cut -d '"' -f 4)
