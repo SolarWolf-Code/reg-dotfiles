@@ -1,3 +1,35 @@
+## Create symbolic links to .config
+for file in *; do
+  if [[ "$file" == ".git" || "$file" == "README.md" || "$file" == "setup.sh" || "$file" == "Packages" ]]; then
+    continue
+  fi  
+  ln -s "$(pwd)/$file" ~/.config/"$file"
+done
+
+## Install Fira Code Mono Nerd Font
+mkdir FiraCode
+wget $(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep "browser_download_url.*FiraMono.*\.tar\.xz" | cut -d '"' -f 4)
+tar -xvf FiraMono.tar.xz -C FiraCode
+sudo cp *.otf /usr/share/fonts
+sudo rm -r FiraCode 
+
+## Install blesh (bash auto complete)
+sudo apt install gawk -y
+cd 
+git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+make -C ble.sh install PREFIX=~/.local
+echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
+
+cd reg-dotfiles
+
+## Install Regolith themes
+sudo apt install regolith-look-* -y
+regolith-look set blackhole
+
+## Add Universal libs
+sudo add-apt-repository universe -y
+sudo apt update -y
+
 ## Install Steam
 sudo apt install steam -y
 
@@ -30,24 +62,20 @@ sudo add-apt-repository ppa:aslatter/ppa -y
 sudo apt update -y
 sudo apt install alacritty
 
-## Install discord (needs to be through .deb file)
-
-
-## IntelliJ Ultimate IDEA (get .tar.gz then run the following)
-
-### https://www.jetbrains.com/help/idea/installation-guide.html#9bddc0c
-### sudo tar -xzf jetbrains-toolbox-1.17.7391.tar.gz -C /opt
-
+## Install Discord (needs to be through .deb file)
+wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
+sudo apt install ./discord*.deb
 
 ## Install lutris
 sudo apt install lutris -y
 
 ## Install qView
-sudo add-apt-repository ppa:jurplel/qview -y
-sudo apt update -y
-sudo apt install qview -y
+wget $(curl -s https://api.github.com/repos/jurplel/qView/releases/latest | grep "browser_download_url" | grep "amd64.deb" | cut -d '"' -f 4)
+sudo apt install ./qview*.deb
 
 ## Install Rustdesk (needs to be through .deb file)
+wget $(curl -s https://api.github.com/repos/rustdesk/rustdesk/releases/latest | grep "browser_download_url" | grep ".deb" | grep -v "armhf" | cut -d '"' -f 4)
+sudo apt install ./rustdesk*.deb
 
 ## Install Spotify
 curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
@@ -68,6 +96,9 @@ sudo apt install nnn -y
 sudo apt install htop -y
 
 ## r2modman (need to grab appimage and use --no-sandbox flag. Requires use to make custom .desktop file)
+wget $(curl -s https://api.github.com/repos/ebkr/r2modmanPlus/releases/latest | grep "browser_download_url.*deb" | cut -d '"' -f 4)
+sudo apt install ./r2modman*.deb -y
+sudo sed -i 's/^Exec=.*/& --no-sandbox/' /usr/share/applications/r2modman.desktop
 
 ## vlc
 sudo apt install vlc -y
@@ -95,3 +126,54 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
 && sudo apt update \
 && sudo apt install gh -y
+
+## Insert keybinds
+sudo cat << EOF >> /usr/share/regolith/i3/config.d/90_user-programs
+
+# Steam -> allows for games to update in background
+exec steam -silent
+
+# Flameshot (screenshot tool)
+bindsym $mod+Shift+s exec flameshot gui
+
+# Ruskdesk
+assign [class="Rustdesk"] $ws3
+exec --no-startup-id rustdesk
+EOF
+
+## Configure OpenVPN
+mkdir ~/ovpn
+touch ~/ovpn/credentials.txt
+sudo mkdir /etc/openvpn/surfshark/
+sudo cp us-slc.prod.surfshark.com_udp.ovpn /etc/openvpn/surfshark/us-slc.prod.surfshark.com_udp.ovpn
+sudo cat << EOF >> /etc/systemd/system/surfshark.service
+[Unit]
+Description=Surfshark OpenVPN service
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/openvpn --config /etc/openvpn/surfshark/us-slc.prod.surfshark.com_udp.ovpn
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable surfshark.service
+sudo systemctl start surfshark.service
+
+## Fix Bluetooth
+sudo apt-get install pulseaudio-module-bluetooth
+sudo killall pulseaudio
+pulseaudio --start    
+sudo systemctl restart bluetooth
+
+## Enable and start libvirtd for virt-manager (requires a restart)
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+
+## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
+INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
+wget "https://download.jetbrains.com/idea/ideaIU-$INTELLIJ_IDEA_VERSION.tar.gz"
+sudo tar -xzf ideaIU-*.tar.gz -C /opt
+/opt/idea-IU-*/bin/idea.sh

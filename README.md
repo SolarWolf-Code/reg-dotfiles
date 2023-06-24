@@ -5,9 +5,5 @@ Run the following:
 sudo ./setup.sh
 ```
 
-## TODO
-- Discord .deb
-- IntelliJ .deb
-- RustDesk .deb
-- r2modman AppImage
-- previous dotfiles
+Remember to fill in credentials for OpenVPN config
+
