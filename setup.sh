@@ -9,6 +9,9 @@ done
 ## Install CURL
 sudo apt install curl
 
+## Install wget
+sudo apt install wget
+
 ## Install noto-fonts
 sudo apt install fonts-noto
 
