@@ -172,6 +172,9 @@ sudo systemctl restart bluetooth
 sudo systemctl enable libvirtd
 sudo systemctl start libvirtd
 
+## Install Tailscale
+sudo apt install tailscale
+
 ## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
 INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
 wget "https://download.jetbrains.com/idea/ideaIU-$INTELLIJ_IDEA_VERSION.tar.gz"
