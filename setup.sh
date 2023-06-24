@@ -12,6 +12,10 @@ sudo apt install curl -y
 ## Install wget
 sudo apt install wget -y
 
+## Install Starship (requires confirmation)
+curl -sS https://starship.rs/install.sh | sh
+echo 'eval "$(starship init bash)"' > ~/.bashrc
+
 ## Install noto-fonts
 sudo apt install fonts-noto -y
 
@@ -62,10 +66,6 @@ EOF
 sudo apt update
 
 sudo apt install librewolf -y
-
-## Install Starship (requires confirmation)
-curl -sS https://starship.rs/install.sh | sh
-echo 'eval "$(starship init bash)"' > ~/.bashrc
 
 ## Install alacritty
 sudo add-apt-repository ppa:aslatter/ppa -y
@@ -135,9 +135,7 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 && sudo apt install gh -y
 
 ## Insert keybinds
-sudo cat << EOF >> /usr/share/regolith/i3/config.d/90_user-programs
-
-# Steam -> allows for games to update in background
+sudo sh -c 'echo "# Steam -> allows for games to update in background
 exec steam -silent
 
 # Flameshot (screenshot tool)
@@ -145,16 +143,14 @@ bindsym $mod+Shift+s exec flameshot gui
 
 # Ruskdesk
 assign [class="Rustdesk"] $ws3
-exec --no-startup-id rustdesk
-EOF
+exec --no-startup-id rustdesk" >> /usr/share/regolith/i3/config.d/90_user-programs'
 
 ## Configure OpenVPN
 mkdir ~/ovpn
 touch ~/ovpn/credentials.txt
 sudo mkdir /etc/openvpn/surfshark/
 sudo cp us-slc.prod.surfshark.com_udp.ovpn /etc/openvpn/surfshark/us-slc.prod.surfshark.com_udp.ovpn
-sudo cat << EOF >> /etc/systemd/system/surfshark.service
-[Unit]
+sudo sh -c 'echo "[Unit]
 Description=Surfshark OpenVPN service
 After=network.target
 
@@ -164,8 +160,9 @@ Restart=always
 RestartSec=3
 
 [Install]
-WantedBy=multi-user.target
-EOF
+WantedBy=multi-user.target" >> /etc/systemd/system/surfshark.service'
+
+
 sudo systemctl enable surfshark.service
 sudo systemctl start surfshark.service
 
@@ -180,8 +177,11 @@ sudo systemctl start libvirtd
 ## Install Tailscale
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
-sudo apt-get update
-sudo apt-get install tailscale
+sudo apt-get update -y
+sudo apt-get install tailscale -y
+
+## Comment out uneeded keybinds
+sed -i '/## Session \/\/ Sleep \/\/ /,$ s/^/#/' /usr/share/regolith/i3/config.d/55_session_keybindings
 
 ## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
 INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
