@@ -187,3 +187,8 @@ INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | g
 wget "https://download.jetbrains.com/idea/ideaIU-$INTELLIJ_IDEA_VERSION.tar.gz"
 sudo tar -xzf ideaIU-*.tar.gz -C /opt
 /opt/idea-IU-*/bin/idea.sh
+
+## Remove the files we needed earlier
+rm *.deb
+rm *.tar.gz
+rm builder-debug.yml
