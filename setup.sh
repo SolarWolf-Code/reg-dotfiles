@@ -6,6 +6,9 @@ for file in *; do
   ln -s "$(pwd)/$file" ~/.config/"$file"
 done
 
+## Install CURL
+sudo apt install curl
+
 ## Install noto-fonts
 sudo apt install fonts-noto
 
