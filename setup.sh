@@ -13,7 +13,7 @@ sudo apt install curl
 sudo apt install wget
 
 ## Install noto-fonts
-sudo apt install fonts-noto
+sudo apt install fonts-noto -y
 
 ## Install Fira Code Mono Nerd Font
 mkdir FiraCode
@@ -62,29 +62,29 @@ sudo apt update
 
 sudo apt install librewolf -y
 
-## Install Starship
+## Install Starship (requires confirmation)
 curl -sS https://starship.rs/install.sh | sh
 echo 'eval "$(starship init bash)"' > ~/.bashrc
 
 ## Install alacritty
 sudo add-apt-repository ppa:aslatter/ppa -y
 sudo apt update -y
-sudo apt install alacritty
+sudo apt install alacritty -y
 
 ## Install Discord (needs to be through .deb file)
 wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
-sudo apt install ./discord*.deb
+sudo apt install ./discord*.deb -y
 
 ## Install lutris
 sudo apt install lutris -y
 
 ## Install qView
 wget $(curl -s https://api.github.com/repos/jurplel/qView/releases/latest | grep "browser_download_url" | grep "amd64.deb" | cut -d '"' -f 4)
-sudo apt install ./qview*.deb
+sudo apt install ./qview*.deb -y
 
 ## Install Rustdesk (needs to be through .deb file)
 wget $(curl -s https://api.github.com/repos/rustdesk/rustdesk/releases/latest | grep "browser_download_url" | grep ".deb" | grep -v "armhf" | cut -d '"' -f 4)
-sudo apt install ./rustdesk*.deb
+sudo apt install ./rustdesk*.deb -y
 
 ## Install Spotify
 curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
@@ -115,9 +115,6 @@ sudo apt install vlc -y
 ## github-copilot-cli
 sudo apt install npm -y
 sudo npm install -g @githubnext/github-copilot-cli
-
-## Install noto-fonts
-sudo apt install noto-fonts -y
 
 ## Install wormhole
 sudo apt install magic-wormhole -y
@@ -180,7 +177,7 @@ sudo systemctl enable libvirtd
 sudo systemctl start libvirtd
 
 ## Install Tailscale
-sudo apt install tailscale
+sudo apt install tailscale -y
 
 ## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
 INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
