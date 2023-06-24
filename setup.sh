@@ -16,15 +16,16 @@ sudo apt install wget -y
 sudo apt install fonts-noto -y
 
 ## Install Fira Code Mono Nerd Font
-mkdir FiraCode
+mkdir FiraMono
 wget $(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep "browser_download_url.*FiraMono.*\.tar\.xz" | cut -d '"' -f 4)
-tar -xvf FiraMono.tar.xz -C FiraCode
+tar -xvf FiraMono.tar.xz -C FiraMono
+cd FiraMono
 sudo cp *.otf /usr/share/fonts
-sudo rm -r FiraCode 
+cd
+sudo rm -r FiraMono
 
 ## Install blesh (bash auto complete)
 sudo apt install gawk -y
-cd 
 git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
 make -C ble.sh install PREFIX=~/.local
 echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
