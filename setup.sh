@@ -7,10 +7,10 @@ for file in *; do
 done
 
 ## Install CURL
-sudo apt install curl
+sudo apt install curl -y
 
 ## Install wget
-sudo apt install wget
+sudo apt install wget -y
 
 ## Install noto-fonts
 sudo apt install fonts-noto -y
