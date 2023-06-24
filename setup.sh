@@ -177,7 +177,10 @@ sudo systemctl enable libvirtd
 sudo systemctl start libvirtd
 
 ## Install Tailscale
-sudo apt install tailscale -y
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+sudo apt-get update
+sudo apt-get install tailscale
 
 ## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
 INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
