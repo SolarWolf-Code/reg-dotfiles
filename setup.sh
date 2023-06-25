@@ -25,8 +25,8 @@ wget $(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest
 tar -xvf FiraMono.tar.xz -C FiraMono
 cd FiraMono
 sudo cp *.otf /usr/share/fonts
-cd
-sudo rm -r FiraMono
+cd 
+sudo rm -r ~/reg-dotfiles/FiraMono
 
 ## Install blesh (bash auto complete)
 sudo apt install gawk -y
@@ -116,6 +116,7 @@ sudo apt install vlc -y
 ## github-copilot-cli
 sudo apt install npm -y
 sudo npm install -g @githubnext/github-copilot-cli
+echo 'eval "$(github-copilot-cli alias -- "$0")"' >> .bashrc
 
 ## Install wormhole
 sudo apt install magic-wormhole -y
@@ -192,4 +193,5 @@ sudo tar -xzf ideaIU-*.tar.gz -C /opt
 ## Remove the files we needed earlier
 rm *.deb
 rm *.tar.gz
+rm *.tar.xz
 rm builder-debug.yml
