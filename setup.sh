@@ -67,6 +67,9 @@ sudo apt update
 
 sudo apt install librewolf -y
 
+## Install Libreoffice
+sudo apt install libreoffice -y
+
 ## Install alacritty
 sudo add-apt-repository ppa:aslatter/ppa -y
 sudo apt update -y
