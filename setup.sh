@@ -136,14 +136,15 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 && sudo apt install gh -y
 
 ## Insert keybinds
-sudo sh -c 'echo "# Steam -> allows for games to update in background
+sudo sh -c 'echo "
+# Steam -> allows for games to update in background
 exec steam -silent
 
 # Flameshot (screenshot tool)
-bindsym $mod+Shift+s exec flameshot gui
+bindsym \$mod+Shift+s exec flameshot gui
 
 # Ruskdesk
-assign [class="Rustdesk"] $ws3
+assign [class=\"Rustdesk\"] \$ws3
 exec --no-startup-id rustdesk" >> /usr/share/regolith/i3/config.d/90_user-programs'
 
 ## Configure OpenVPN
@@ -182,7 +183,7 @@ sudo apt-get update -y
 sudo apt-get install tailscale -y
 
 ## Comment out uneeded keybinds
-sed -i '/## Session \/\/ Sleep \/\/ /,$ s/^/#/' /usr/share/regolith/i3/config.d/55_session_keybindings
+sudo sed -i '/## Session \/\/ Sleep \/\/ /,$ s/^/#/' /usr/share/regolith/i3/config.d/55_session_keybindings
 
 ## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
 INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
