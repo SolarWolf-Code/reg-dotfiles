@@ -12,6 +12,9 @@ sudo apt install curl -y
 ## Install wget
 sudo apt install wget -y
 
+## Install make
+sudo apt install make -y
+
 ## Install Starship (requires confirmation)
 curl -sS https://starship.rs/install.sh | sh
 echo 'eval "$(starship init bash)"' > ~/.bashrc
@@ -79,9 +82,6 @@ sudo apt install alacritty -y
 wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
 sudo apt install ./discord*.deb -y
 
-## Install lutris
-sudo apt install lutris -y
-
 ## Install qView
 wget $(curl -s https://api.github.com/repos/jurplel/qView/releases/latest | grep "browser_download_url" | grep "amd64.deb" | cut -d '"' -f 4)
 sudo apt install ./qview*.deb -y
@@ -119,7 +119,7 @@ sudo apt install vlc -y
 ## github-copilot-cli
 sudo apt install npm -y
 sudo npm install -g @githubnext/github-copilot-cli
-echo 'eval "$(github-copilot-cli alias -- "$0")"' >> .bashrc
+echo 'eval "$(github-copilot-cli alias -- "$0")"' >> ~/.bashrc
 
 ## Install wormhole
 sudo apt install magic-wormhole -y
