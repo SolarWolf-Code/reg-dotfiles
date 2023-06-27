@@ -174,6 +174,9 @@ sudo systemctl start surfshark.service
 ## Fix Bluetooth (requires reboot)
 sudo touch /usr/share/pipewire/media-session.d/with-pulseaudio
 sudo apt install gstreamer1.0-pipewire -y
+killall pipewire
+pulseaudio --start
+sudo systemctl restart bluetooth
 
 ## Enable and start libvirtd for virt-manager (requires reboot)
 sudo systemctl enable libvirtd
