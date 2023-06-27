@@ -176,7 +176,9 @@ sudo touch /usr/share/pipewire/media-session.d/with-pulseaudio
 sudo apt install gstreamer1.0-pipewire -y
 killall pipewire
 pulseaudio --start
-sudo systemctl restart bluetooth
+sudo chown -R $USER:$USER $HOME/
+sudo apt-get --purge --reinstall install pulseaudio-module-bluetooth alsa-base pulseaudio -y
+mv ~/.config/pulse ~/.config/pulse.old
 
 ## Enable and start libvirtd for virt-manager (requires reboot)
 sudo systemctl enable libvirtd
