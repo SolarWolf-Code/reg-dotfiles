@@ -193,11 +193,21 @@ sudo apt-get install tailscale -y
 ## Comment out uneeded keybinds
 sudo sed -i '/## Session \/\/ Sleep \/\/ /,$ s/^/#/' /usr/share/regolith/i3/config.d/55_session_keybindings
 
-## IntelliJ Ultimate IDEA (get .tar.gz then run the following).
-INTELLIJ_IDEA_VERSION=$(wget "https://www.jetbrains.com/idea/download/" -qO- | grep -P -o -m 1 '(?<="version": ")[^"]+')
-wget "https://download.jetbrains.com/idea/ideaIU-$INTELLIJ_IDEA_VERSION.tar.gz"
-sudo tar -xzf ideaIU-*.tar.gz -C /opt
-/opt/idea-IU-*/bin/idea.sh
+## Jetbrains Toolbox (get .tar.gz then run the following).
+TOOLBOX_VERSION_URL=$(curl -s 'https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release' | grep -Po '"linux":.*?[^\\]",' | awk -F ':' '{print $3,":"$4}'| sed 's/[", ]//g')
+wget "$TOOLBOX_VERSION_URL" 
+tar -xzf jetbrains-toolbox-*.tar.gz -C ~/
+mv ~/jetbrains-toolbox-* ~/jetbrains-toolbox
+wget -O ~/jetbrains-toolbox/jetbrains-toolbox.png https://logon-int.com/wp-content/uploads/2019/01/toolbox_logo_300x300.png
+sudo sh -c 'echo "[Desktop Entry]
+Name=Jetbrain Toolbox
+Exec=/home/wolf/jetbrains-toolbox/jetbrains-toolbox
+Terminal=false
+Type=Application
+Icon=/home/wolf/jetbrains-toolbox/jetbrains-toolbox.png
+StartupWMClass=Jetbrains Toolbox" >> /usr/share/applications/jetbrains-toolbox.desktop'
+
+
 
 ## Remove the files we needed earlier
 rm *.deb
