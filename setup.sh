@@ -88,7 +88,7 @@ sudo apt install ./qview*.deb -y
 
 ## Install Rustdesk (needs to be through .deb file)
 wget $(curl -s https://api.github.com/repos/rustdesk/rustdesk/releases/latest | grep "browser_download_url" | grep ".deb" | grep -v "armhf" | cut -d '"' -f 4)
-sudo apt install ./rustdesk*.deb -y
+sudo apt install ./rustdesk*-x86_64.deb -y
 
 ## Install Spotify
 curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
